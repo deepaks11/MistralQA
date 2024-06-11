@@ -26,6 +26,11 @@
 - PyTorch with CUDA support (optional for GPU acceleration)
 - Install required Python libraries with `pip install -r requirements.txt`
 
+# Hardware Requirements
+
+  - CPU: Minimum 32GB RAM and Intel i7 processor
+  - GPU: Minimum RTX 3060 with 8GB RAM
+
 ### Installation
 
 1. **Clone the Repository**:
