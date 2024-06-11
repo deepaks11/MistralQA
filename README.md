@@ -34,11 +34,18 @@
    cd RAG_llamacpp_mistral
    ```
 
-2. **Install Dependencies**:
-   ```bash
-   For CPU: pip install -r requirements_cpu.txt
-   For GPU: pip install -r requirements_gpu.txt
-   ```
+### GPU Requirements
+
+If you're using GPU, ensure you have the following dependencies installed:
+
+- **langchain**: [langchain](https://github.com/langchain/langchain)
+- **langchain-community**: [langchain-community](https://github.com/langchain/langchain-community)
+- **transformers**: [transformers](https://github.com/huggingface/transformers)
+- **sentence-transformers**: [sentence-transformers](https://github.com/UKPLab/sentence-transformers)
+- **Faiss GPU**: You can install Faiss GPU using conda:
+  ```bash
+  conda install -c conda-forge faiss-gpu
+
 
 3. **Download the Mistral Model**:
    - Ensure the Mistral-7B model is downloaded and update the `model` path in the code to its location.
