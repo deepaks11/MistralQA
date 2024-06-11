@@ -30,7 +30,7 @@
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/deepaks11/RAG_llamacpp_mistral
+   git clone https://github.com/deepaks11/MistralQA
    cd RAG_llamacpp_mistral
    ```
 
