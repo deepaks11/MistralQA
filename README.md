@@ -1,96 +1,84 @@
-# Intent Classification Using LangChain and LlamaCpp
+# MistralQA: An Intelligent Document Question Answering System
 
-This project uses LangChain integrated with the LlamaCpp model to perform intent classification through advanced text generation. Specifically, it employs the OpenChat-3.5-0106.Q4_K_M.gguf model. By leveraging various tools from LangChain, such as the RecursiveCharacterTextSplitter, FAISS vector stores, and HuggingFaceEmbeddings, the project constructs a comprehensive system for accurate intent identification. 
+**MistralQA** is an advanced Question Answering (QA) system that extracts information from documents and provides precise answers to user queries. This project leverages the Mistral-7B language model in a Retrieval-Augmented Generation (RAG) framework, integrating various components from the LangChain library to deliver accurate responses from large PDF documents.
 
 ## Features
 
-- Intent identification using text generation LLM model
-- Utilizes LangChain's RecursiveCharacterTextSplitter
-- Question-answering chain using LangChain
-- Integration with LlamaCpp
-- Vector stores using FAISS
-- Embeddings with HuggingFaceEmbeddings
-- CSV document loader
+- **Document Processing**: Loads PDF files and splits them into manageable chunks using `PyPDFLoader` and `RecursiveCharacterTextSplitter`.
+- **Advanced Language Model**: Utilizes the Mistral-7B model, fine-tuned for instruction-based tasks, for generating nuanced and contextually accurate answers.
+- **Efficient Embeddings and Retrieval**: Implements `HuggingFaceEmbeddings` and stores vector representations in a `Chroma` vector database for fast and scalable retrieval.
+- **Conversational Memory**: Maintains context across multiple interactions using `ConversationBufferMemory`, supporting coherent and continuous dialogue.
+- **Performance Optimization**: Adapts to available hardware, running efficiently on both CPU and GPU.
 
-# System Requirements
-  Ensure your system meets the following software requirements:
-  - Operating System: Windows, macOS, or Linux
-  - Python: Version 3.10 or higher
-  - Conda: Anaconda 
+## How It Works
 
-# Hardware Requirements
+1. **Load and Split Document**: The system loads a PDF and splits it into chunks using LangChain components.
+2. **Create Embeddings**: Converts text chunks into dense vector representations with `HuggingFaceEmbeddings`.
+3. **Retrieve Relevant Chunks**: Uses a semantic search to find relevant text chunks based on user queries.
+4. **Generate Answers**: Feeds retrieved chunks into the Mistral-7B model to generate accurate responses.
+5. **Maintain Context**: Uses conversational memory to keep track of dialogue context, enhancing multi-turn interactions.
 
-  - CPU: Minimum 16 GB RAM and Intel i7 processor
-  - GPU: Minimum RTX 3060 with 8 GB RAM
+## Quick Start
 
-## Installation Instructions
+### Prerequisites
 
-To install and run this project locally, follow these steps:
+- Python 3.9 or higher
+- PyTorch with CUDA support (optional for GPU acceleration)
+- Install required Python libraries with `pip install -r requirements.txt`
 
-1. **Clone the Repository**: First, clone the project repository to your local machine using Git:
+### Installation
 
-```sh
-   git clone https://github.com/deepaks11/intent_classification_llamacpp
-   cd intent_classification_llamacpp
-
-2. Set Up Conda Environment
-   conda create --name (env name) python=3.10
-   conda activate intent-identification
-
-3. Install Dependencies
-   pip install -r requirements.txt
-
-4. Run the Project
-   python run_cpu.py or run_gpu.py
-```
-## Dataset Format
-   ```sh
-   "</s>[INST] this intent about the server list and the intent associated with the server, can you give me a servers list,
-    is there any server available right now, get the configured server details, give me the server details, How many servers have been configured,  
-    Can you provide me with an updated list of all our servers [/INST] "intent": "Server List" </s>"
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/deepaks11/RAG_llamacpp_mistral
+   cd RAG_llamacpp_mistral
    ```
-## CPU Requirements
 
-To run this project on a CPU, you'll need the following Python packages:
+2. **Install Dependencies**:
+   ```bash
+   For CPU: pip install -r requirements_cpu.txt
+   For GPU: pip install -r requirements_gpu.txt
+   ```
 
-```plaintext
-langchain
-langchain-community
-transformers
-sentence-transformers
-faiss-cpu
-torch
-torchvision
-torchaudio
-llama-cpp-python
+3. **Download the Mistral Model**:
+   - Ensure the Mistral-7B model is downloaded and update the `model` path in the code to its location.
+
+### Running the Project
+
+```bash
+python run_cpu.py or python run_gpu.py
 ```
-## GPU Requirements
 
-For GPU support, you'll need the following:
+- **Interactive Mode**: Enter your questions, and the system will provide answers based on the loaded document.
+- **Exit**: Type `exit` to end the session.
 
-1. Install the necessary Python packages:
+## Usage Example
 
-```sh
-  conda install -c conda-forge faiss-gpu
-  pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-  pip install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124
+```bash
+Enter a question: What are the main findings in the report?
+Answer: The report highlights several key findings including...
 ```
-2. If `llama-cpp-python` is not installed for GPU, refer to the [official installation guide](https://github.com/abetlen/llama-cpp-python).
 
-## Links
-- For more details on the integration with LlamaCpp, refer to the https://python.langchain.com/v0.2/docs/integrations/llms/llamacpp
-- Download the model from Hugging Face and place it in the appropriate directory https://huggingface.co/TheBloke/openchat-3.5-0106-GGUF.
- 
+## Future Enhancements
+
+- **Multi-document Support**: Extend to query across multiple documents.
+- **Enhanced Memory Management**: Improve conversational flow handling.
+- **Model Integration**: Support additional language models.
+
+## Contribution
+
+Contributions are welcome! Fork the repository and submit a pull request with your changes.
+
 ## License
 
-This project is licensed under the MIT License. See the LICENSE file for more details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## Author
-**Deepak.s**
-- [GitHub](https://github.com/deepaks11)
-- [Email](mailto:deepaklsm11@gmail.com)
+## Acknowledgments
 
-## Contributions
+- **LangChain**: For robust document processing tools.
+- **Hugging Face**: For pre-trained models and the transformers library.
+- **Mistral AI**: For the Mistral-7B model.
 
-Contributions, issues, and feature requests are welcome!
-                                                                       
+---
+
+You can now copy this entire block at once and paste it directly into your README file on GitHub.
