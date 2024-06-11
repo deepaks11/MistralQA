@@ -34,17 +34,32 @@
    cd RAG_llamacpp_mistral
    ```
 
-### GPU Requirements
+### GPU and CPU Requirements
 
-If you're using GPU, ensure you have the following dependencies installed:
-
-- **langchain**: [langchain](https://github.com/langchain/langchain)
-- **langchain-community**: [langchain-community](https://github.com/langchain/langchain-community)
-- **transformers**: [transformers](https://github.com/huggingface/transformers)
-- **sentence-transformers**: [sentence-transformers](https://github.com/UKPLab/sentence-transformers)
-- **Faiss GPU**: You can install Faiss GPU using conda:
-  ```bash
-  conda install -c conda-forge faiss-gpu
+2.  **If you're using GPU, ensure you have the following dependencies installed**:
+```bash
+   langchain
+   langchain-community
+   transformers
+   sentence-transformers
+   conda install -c conda-forge faiss-gpu
+   pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
+   pip install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124
+   pypdf
+   chromadb
+```
+ 2.  **If you're using CPU, ensure you have the following dependencies installed**:
+```bash
+   langchain
+   langchain-community
+   transformers
+   sentence-transformers
+   faiss-cpu
+   torch torchvision torchaudio
+   llama-cpp-python
+   pypdf
+   chromadb
+```
 
 
 3. **Download the Mistral Model**:
