@@ -34,6 +34,12 @@
    cd RAG_llamacpp_mistral
    ```
 
+# Hardware Requirements
+
+  - CPU: Minimum 32 GB RAM and Intel i7 processor
+  - GPU: Minimum RTX 3060 with 8 GB RAM
+
+
 ### GPU and CPU Requirements
 
 2.  **If you're using GPU, ensure you have the following dependencies installed**:
