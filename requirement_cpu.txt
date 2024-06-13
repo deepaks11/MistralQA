@@ -5,5 +5,5 @@ sentence-transformers
 faiss-cpu
 torch torchvision torchaudio
 llama-cpp-python
-pypdf
+PyMuPDFLoader
 chromadb
