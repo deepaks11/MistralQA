@@ -5,5 +5,5 @@ sentence-transformers
 conda install -c conda-forge faiss-gpu
 pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
 pip install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124
-pypdf
+PyMuPDFLoader
 chromadb
