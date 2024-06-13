@@ -55,8 +55,9 @@
    sentence-transformers
    conda install -c conda-forge faiss-gpu
    pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu121
-   pip install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python/whl/cu124
-   pypdf
+   set LLAMA_CUDA=on
+   pip install llama-cpp-python --extra-index-url https://abetlen.github.io/llama-cpp-python==0.2.76/whl/cu124
+   PyMuPDFLoader
    chromadb
 ```
  2.  **If you're using CPU, ensure you have the following dependencies installed**:
@@ -68,7 +69,7 @@
    faiss-cpu
    torch torchvision torchaudio
    llama-cpp-python
-   pypdf
+   PyMuPDFLoader
    chromadb
 ```
 
