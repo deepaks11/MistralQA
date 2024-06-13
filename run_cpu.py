@@ -1,6 +1,6 @@
 import torch
 # from langchain.chains.retrieval_qa.base import RetrievalQA
-from langchain.document_loaders import PyPDFLoader
+from langchain.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings import HuggingFaceEmbeddings
 from langchain.vectorstores import Chroma
@@ -16,7 +16,7 @@ model = os.path.join(c_w_d, "models/mistral-7b-instruct-v0.2.Q4_K_M.gguf")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Set the file path to the PDF file
-loader = PyPDFLoader(file_path=dataset)
+loader = PyMuPDFLoader(file_path=dataset)
 data = loader.load()
 
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=64)
