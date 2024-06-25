@@ -1,12 +1,10 @@
 import torch
-# from langchain.chains.retrieval_qa.base import RetrievalQA
-from langchain.document_loaders import PyMuPDFLoader
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.embeddings import HuggingFaceEmbeddings
-from langchain.vectorstores import Chroma
-from langchain.llms import LlamaCpp
-from langchain.memory import ConversationBufferMemory
-from langchain.chains import ConversationalRetrievalChain
+from langchain_community.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_community.llms import LlamaCpp
+from langchain.chains.question_answering import load_qa_chain
+from langchain_community.document_loaders import PyMuPDFLoader
 import time, os
 
 
@@ -16,49 +14,56 @@ model = os.path.join(c_w_d, "models/mistral-7b-instruct-v0.2.Q4_K_M.gguf")
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # Set the file path to the PDF file
+s = time.time()
+
 loader = PyMuPDFLoader(file_path=dataset)
 data = loader.load()
+print("execute time :", time.time() - s)
 
-text_splitter = RecursiveCharacterTextSplitter(chunk_size=1024, chunk_overlap=64)
-text_chunks = text_splitter.split_documents(data)
+text_splitter = RecursiveCharacterTextSplitter(
+    chunk_size=1024,
+    chunk_overlap=64,
+    separators=['\n\n', '\n', '(?=>\. )', ' ', '']
+)
+
+docs = text_splitter.split_documents(data)
 
 # Initialize Large Language Model for answer generation
-llm_answer_gen = LlamaCpp(
-    streaming=True,
+llm = LlamaCpp(
     model_path=model,
     temperature=0.95,
     max_tokens=50,
     n_threads=8,
     n_gpu_layers=35,
     top_p=1,
+    f16_kv=True,
     verbose=False,
-    n_ctx=4096
+    n_ctx=4096,
+    stop=["Q:", "\n"],
+    echo=True
 )
 
 # Create vector database for answer generation
-embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/all-MiniLM-L6-v2", model_kwargs={"device": device})
+embeddings = HuggingFaceEmbeddings(model_name="sentence-transformers/average_word_embeddings_glove.6B.300d", model_kwargs={"device": device})
 
-# Initialize vector store for answer generation
-vector_store = Chroma.from_documents(text_chunks, embeddings)
+chain = load_qa_chain(llm, chain_type="stuff")
 
-# Initialize retrieval chain for answer generation
-memory = ConversationBufferMemory(memory_key="chat_history", return_messages=True)
-answer_gen_chain = ConversationalRetrievalChain.from_llm(llm=llm_answer_gen, retriever=vector_store.as_retriever(), memory=memory)
-# answer_gen_chain = RetrievalQA.from_chain_type(llm=llm_answer_gen, chain_type="stuff",
-#                                                retriever=vector_store.as_retriever())
+db = FAISS.from_documents(docs, embeddings)
 
 while True:
 
-    user_input = input("Enter a question: ")
+    question = input("Enter a question: ")
     s = time.time()
-    if user_input.lower() == 'exit':
+    if question.lower() == 'exit':
         break
 
+    docs = db.similarity_search(question)
     # Run question generation chain
-    question = user_input
-    answers = answer_gen_chain.run({"question": question})
-    # answers = answer_gen_chain.run(question)
+    response = chain.run(
+        input_documents=docs,
+        question=question
+    )
 
     # Print results outside the loop or limit the number of questions to process before printing
-    print("Answer: ", answers)
+    print("Answer: ", response)
     print("execute time :", time.time() - s)
